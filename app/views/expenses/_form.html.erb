@@ -1,0 +1,32 @@
+<%= form_with model: expense do |f| %>
+  <% if expense.errors.any? %>
+    <div>
+      <% expense.errors.full_messages.each do |msg| %>
+        <p><%= msg %></p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :date, "日付" %>
+    <%= f.date_field :date %>
+  </div>
+  <div>
+    <%= f.label :amount, "金額" %>
+    <%= f.number_field :amount %>
+  </div>
+  <div>
+    <%= f.label :category, "カテゴリ" %>
+    <%= f.select :category, Expense::CATEGORIES %>
+  </div>
+  <div>
+    <%= f.label :payment_method, "支払い方法" %>
+    <%= f.select :payment_method, Expense::PAYMENT_METHODS %>
+  </div>
+  <div>
+    <%= f.label :memo, "メモ" %>
+    <%= f.text_area :memo %>
+  </div>
+
+  <%= f.submit %>
+<% end %>

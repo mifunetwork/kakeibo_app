@@ -1,0 +1,32 @@
+<h1>支出一覧</h1>
+<p>合計: <%= number_to_currency(@total, unit: "¥", delimiter: ",", format: "%u%n") %></p>
+
+<%= link_to "新規登録", new_expense_path %>
+
+<% if notice %>
+  <p><%= notice %></p>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>日付</th><th>金額</th><th>カテゴリ</th><th>支払い方法</th><th>メモ</th><th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @expenses.each do |expense| %>
+      <tr>
+        <td><%= expense.date %></td>
+        <td><%= number_to_currency(expense.amount, unit: "¥", delimiter: ",", format: "%u%n") %></td>
+        <td><%= expense.category %></td>
+        <td><%= expense.payment_method %></td>
+        <td><%= expense.memo %></td>
+        <td>
+          <%= link_to "編集", edit_expense_path(expense) %>
+          <%# Rails 8ではturbo_method の代わりに button_to を推奨 %>
+          <%= button_to "削除", expense_path(expense), method: :delete, data: { turbo_confirm: "削除しますか？" } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
